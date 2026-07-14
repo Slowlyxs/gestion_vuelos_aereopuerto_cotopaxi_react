@@ -1,33 +1,36 @@
 // src/application/use-cases/dashboard.use-case.ts
-import type { CategoryUseCase } from './category.use-case'
-import type { ProductUseCase } from './product.use-case'
-import type { OrderUseCase } from './order.use-case'
-import type { UserUseCase } from './user.use-case'
-import type { AdminStats } from '@/domain/entities/admin-stats.entity'
 
-export class DashboardUseCase {
-  constructor(
-    private readonly categoryUseCase: CategoryUseCase,
-    private readonly productUseCase: ProductUseCase,
-    private readonly orderUseCase: OrderUseCase,
-    private readonly userUseCase: UserUseCase,
-  ) {}
+import { getAirportsUseCase } from "./get-airports.usecase";
+import type { Airport } from "@/domain/entities/airport.entity";
 
-  async getStats(): Promise<AdminStats> {
-    const [categoryStats, productStats, orderStats, userStats] = await Promise.all([
-      this.categoryUseCase.getStats(),
-      this.productUseCase.getStats(),
-      this.orderUseCase.getStats(),
-      this.userUseCase.getStats(),
-    ])
+export interface DashboardStats {
+  totalAirports: number;
+  countries: number;
+  cities: number;
+  airportsWithImage: number;
+  airports: Airport[];
+}
 
-    return {
-      total_products: productStats.total_active,
-      total_categories: categoryStats.total,
-      total_orders: orderStats.total_orders,
-      total_users: userStats.total,
-      pending_orders: orderStats.by_status.pending,
-      out_of_stock_products: productStats.out_of_stock,
-    }
-  }
+export async function dashboardUseCase(): Promise<DashboardStats> {
+  const airports = await getAirportsUseCase();
+
+  const countries = new Set(
+    airports.map((airport) => airport.pais)
+  );
+
+  const cities = new Set(
+    airports.map((airport) => airport.ciudad)
+  );
+
+  const airportsWithImage = airports.filter(
+    (airport) => Boolean(airport.image_url || airport.image)
+  );
+
+  return {
+    totalAirports: airports.length,
+    countries: countries.size,
+    cities: cities.size,
+    airportsWithImage: airportsWithImage.length,
+    airports,
+  };
 }
