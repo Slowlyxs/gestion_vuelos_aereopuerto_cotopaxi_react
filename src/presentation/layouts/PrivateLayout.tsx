@@ -128,9 +128,14 @@ export default function PrivateLayout() {
           />
 
 
+
           <SidebarItem
             to="/private/operaciones/incidentes"
             label="Incidentes"
+          />
+          <SidebarItem
+            to="/operaciones/estado-vuelo"
+            label="Estado de vuelo"
           />
 
 

@@ -52,6 +52,7 @@ import SchedulesPage from "@/presentation/pages/private/operations/SchedulesPage
 import IncidentsPage from "@/presentation/pages/private/operations/IncidentsPage";
 import TrafficControlPage from "@/presentation/pages/private/operations/TrafficControlPage";
 import WeatherPage from "../pages/private/operations/WeatherPage";
+import FlightStatusPage from "../pages/private/operations/FlightStatusPage";
 
 
 // Staff
@@ -231,6 +232,11 @@ const router = createBrowserRouter([
         path: "/private/operaciones/control-trafico",
 
         element: <TrafficControlPage />,
+      },
+
+      {
+        path: "/operaciones/estado-vuelo",
+        element: <FlightStatusPage />,
       },
 
 
