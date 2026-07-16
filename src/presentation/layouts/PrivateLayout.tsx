@@ -105,6 +105,7 @@ export default function PrivateLayout() {
             OPERACIONES
           </p>
 
+
           <SidebarItem
             to="/private/operaciones/vuelos"
             label="Vuelos"
