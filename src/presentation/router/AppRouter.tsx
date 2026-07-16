@@ -39,7 +39,7 @@ import DashboardPage from "@/presentation/pages/private/dashboard/DashboardPage"
 
 // Infrastructure
 import AirportsPage from "@/presentation/pages/private/infrastructure/AirportsPage";
-import AircraftPage from "@/presentation/pages/private/infrastructure/AircraftPage";
+import AircraftPage from "../pages/private/infrastructure/AircraftPage";
 import MaintenancePage from "@/presentation/pages/private/infrastructure/MaintenancePage";
 import TerminalsPage from "@/presentation/pages/private/infrastructure/TerminalsPage";
 import GatesPage from "@/presentation/pages/private/infrastructure/GatesPage";
@@ -54,6 +54,8 @@ import IncidentsPage from "@/presentation/pages/private/operations/IncidentsPage
 import TrafficControlPage from "@/presentation/pages/private/operations/TrafficControlPage";
 import WeatherPage from "../pages/private/operations/WeatherPage";
 import FlightStatusPage from "../pages/private/operations/FlightStatusPage";
+import StopoversPage from "../pages/private/operations/StopoversPage";
+
 
 
 // Staff
@@ -214,6 +216,10 @@ const router = createBrowserRouter([
         path: "/private/operaciones/rutas",
 
         element: <RoutesPage />,
+      },
+      {
+        path: "/operaciones/escalas",
+        element: <StopoversPage />,
       },
 
 

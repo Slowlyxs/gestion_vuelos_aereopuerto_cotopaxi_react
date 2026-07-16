@@ -121,6 +121,10 @@ export default function PrivateLayout() {
             label="Rutas"
           />
           <SidebarItem
+            to="/operaciones/escalas"
+            label="Escalas"
+          />
+          <SidebarItem
             to="/operaciones/clima"
             label="Clima"
           />
