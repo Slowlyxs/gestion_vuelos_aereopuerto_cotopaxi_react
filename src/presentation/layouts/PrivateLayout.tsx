@@ -69,6 +69,10 @@ export default function PrivateLayout() {
             to="/private/infraestructura/aeropuertos"
             label="Aeropuertos"
           />
+          <SidebarItem
+            to="/private/infraestructura/aerolineas"
+            label="Aerolíneas"
+          />
 
 
           <SidebarItem
@@ -111,6 +115,10 @@ export default function PrivateLayout() {
           <SidebarItem
             to="/private/operaciones/rutas"
             label="Rutas"
+          />
+          <SidebarItem
+            to="/operaciones/clima"
+            label="Clima"
           />
 
 
@@ -243,9 +251,9 @@ export default function PrivateLayout() {
 
 interface SidebarItemProps {
 
-  to:string;
+  to: string;
 
-  label:string;
+  label: string;
 
 }
 
@@ -254,7 +262,7 @@ interface SidebarItemProps {
 function SidebarItem({
   to,
   label,
-}:SidebarItemProps){
+}: SidebarItemProps) {
 
 
   return (

@@ -51,6 +51,7 @@ import RoutesPage from "@/presentation/pages/private/operations/RoutesPage";
 import SchedulesPage from "@/presentation/pages/private/operations/SchedulesPage";
 import IncidentsPage from "@/presentation/pages/private/operations/IncidentsPage";
 import TrafficControlPage from "@/presentation/pages/private/operations/TrafficControlPage";
+import WeatherPage from "../pages/private/operations/WeatherPage";
 
 
 // Staff
@@ -156,6 +157,10 @@ const router = createBrowserRouter([
         path: "/private/infraestructura/aeropuertos",
 
         element: <AirportsPage />,
+      },
+      {
+        path: "/operaciones/clima",
+        element: <WeatherPage />,
       },
 
 
@@ -305,7 +310,7 @@ export default function AppRouter() {
 
   return (
 
-    <RouterProvider router={router}/>
+    <RouterProvider router={router} />
 
   );
 
