@@ -162,6 +162,10 @@ export default function PrivateLayout() {
             to="/private/personal/pilotos"
             label="Pilotos"
           />
+          <SidebarItem
+            to="/personal/asignaciones-tripulacion"
+            label="Asignación de tripulación"
+          />
 
 
           <SidebarItem

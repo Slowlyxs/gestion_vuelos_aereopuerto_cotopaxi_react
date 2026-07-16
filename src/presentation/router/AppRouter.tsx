@@ -59,7 +59,7 @@ import FlightStatusPage from "../pages/private/operations/FlightStatusPage";
 import EmployeesPage from "@/presentation/pages/private/staff/EmployeesPage";
 import PilotsPage from "@/presentation/pages/private/staff/PilotsPage";
 import CrewPage from "@/presentation/pages/private/staff/CrewPage";
-import RunwaysPage from "@/presentation/pages/private/staff/RunwayAssignmentsPage";
+import CrewAssignmentsPage from "../pages/private/staff/CrewAssignmentsPage";
 import RunwayAssignmentsPage from "@/presentation/pages/private/staff/RunwayAssignmentsPage";
 
 
@@ -268,6 +268,10 @@ const router = createBrowserRouter([
         path: "/private/personal/tripulaciones",
 
         element: <CrewPage />,
+      },
+      {
+        path: "/personal/asignaciones-tripulacion",
+        element: <CrewAssignmentsPage />,
       },
 
 
