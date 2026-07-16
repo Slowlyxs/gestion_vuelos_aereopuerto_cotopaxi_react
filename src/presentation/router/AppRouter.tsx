@@ -45,6 +45,7 @@ import TerminalsPage from "@/presentation/pages/private/infrastructure/Terminals
 import GatesPage from "@/presentation/pages/private/infrastructure/GatesPage";
 import FlightAuthorizationsPage from "../pages/private/operations/FlightAuthorizationsPage";
 import FlightStatusHistoryPage from "../pages/private/operations/FlightStatusHistoryPage";
+import ControlTowersPage from '@/presentation/pages/private/infrastructure/ControlTowersPage'
 
 
 // Operations
@@ -179,6 +180,10 @@ const router = createBrowserRouter([
         path: "/private/infraestructura/aviones",
 
         element: <AircraftPage />,
+      },
+      {
+        path: '/private/infraestructura/torres-control',
+        element: <ControlTowersPage />,
       },
 
 

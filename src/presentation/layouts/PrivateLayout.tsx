@@ -101,6 +101,10 @@ export default function PrivateLayout() {
             to="/private/infraestructura/puertas-embarque"
             label="Puertas embarque"
           />
+          <SidebarItem
+            to="/private/infraestructura/torres-control"
+            label="Torres de control"
+          />
 
 
 
