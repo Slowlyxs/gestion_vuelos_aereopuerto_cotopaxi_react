@@ -43,6 +43,7 @@ import AircraftPage from "@/presentation/pages/private/infrastructure/AircraftPa
 import MaintenancePage from "@/presentation/pages/private/infrastructure/MaintenancePage";
 import TerminalsPage from "@/presentation/pages/private/infrastructure/TerminalsPage";
 import GatesPage from "@/presentation/pages/private/infrastructure/GatesPage";
+import FlightAuthorizationsPage from "../pages/private/operations/FlightAuthorizationsPage";
 
 
 // Operations
@@ -239,6 +240,10 @@ const router = createBrowserRouter([
       {
         path: "/operaciones/estado-vuelo",
         element: <FlightStatusPage />,
+      },
+      {
+        path: "/operaciones/autorizaciones-vuelo",
+        element: <FlightAuthorizationsPage />,
       },
 
 

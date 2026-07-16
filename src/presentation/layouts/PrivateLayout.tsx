@@ -137,6 +137,10 @@ export default function PrivateLayout() {
             to="/operaciones/estado-vuelo"
             label="Estado de vuelo"
           />
+          <SidebarItem
+            to="/operaciones/autorizaciones-vuelo"
+            label="Autorizaciones de vuelo"
+          />
 
 
           <SidebarItem
