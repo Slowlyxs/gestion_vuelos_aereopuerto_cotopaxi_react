@@ -56,6 +56,7 @@ import TrafficControlPage from "@/presentation/pages/private/operations/TrafficC
 import WeatherPage from "../pages/private/operations/WeatherPage";
 import FlightStatusPage from "../pages/private/operations/FlightStatusPage";
 import StopoversPage from "../pages/private/operations/StopoversPage";
+import FlightRecordsPage from '@/presentation/pages/private/operations/FlightRecordsPage'
 
 
 
@@ -237,6 +238,10 @@ const router = createBrowserRouter([
         path: "/private/operaciones/incidentes",
 
         element: <IncidentsPage />,
+      },
+      {
+        path: '/private/operaciones/registros-vuelo',
+        element: <FlightRecordsPage />,
       },
 
 

@@ -159,6 +159,10 @@ export default function PrivateLayout() {
             to="/operaciones/historial-estados-vuelo"
             label="Historial estado de vuelos"
           />
+          <SidebarItem
+            to="/private/operaciones/registros-vuelo"
+            label="Registros de vuelo"
+          />
 
 
 
