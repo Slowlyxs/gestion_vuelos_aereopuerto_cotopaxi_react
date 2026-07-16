@@ -1,22 +1,22 @@
 import { useEffect } from "react";
 
-import { useScheduleStore } from "@/presentation/store/schedule.store";
+import { useFlightStatusHistoryStore } from "@/presentation/store/flight-status-history.store";
 
-export default function SchedulesPage() {
+export default function FlightStatusHistoryPage() {
 
   const {
 
-    schedules,
+    history,
 
-    loadSchedules,
+    loadHistory,
 
     isLoading,
 
-  } = useScheduleStore();
+  } = useFlightStatusHistoryStore();
 
   useEffect(() => {
 
-    loadSchedules();
+    loadHistory();
 
   }, []);
 
@@ -27,11 +27,15 @@ export default function SchedulesPage() {
       <div>
 
         <h1 className="text-2xl font-bold">
-          Horarios
+
+          Historial de Estados de Vuelo
+
         </h1>
 
         <p className="text-muted-foreground">
-          Horarios programados de los vuelos
+
+          Registro histórico de cambios de estado de los vuelos
+
         </p>
 
       </div>
@@ -53,23 +57,33 @@ export default function SchedulesPage() {
               <tr>
 
                 <th className="p-3 text-left">
+
+                  ID
+
+                </th>
+
+                <th className="p-3 text-left">
+
                   Vuelo
+
                 </th>
 
                 <th className="p-3 text-left">
-                  Fecha
-                </th>
 
-                <th className="p-3 text-left">
                   Estado
+
                 </th>
 
                 <th className="p-3 text-left">
-                  Salida
+
+                  Observación
+
                 </th>
 
                 <th className="p-3 text-left">
-                  Llegada
+
+                  Fecha
+
                 </th>
 
               </tr>
@@ -80,40 +94,40 @@ export default function SchedulesPage() {
 
               {
 
-                schedules.map((schedule) => (
+                history.map((item) => (
 
                   <tr
-                    key={schedule.id}
+                    key={item.id}
                     className="border-b"
                   >
 
                     <td className="p-3">
 
-                      {schedule.id_vuelo.codigo_vuelo}
+                      {item.id}
 
                     </td>
 
                     <td className="p-3">
 
-                      {new Date(schedule.id_vuelo.fecha).toLocaleDateString()}
+                      {item.id_vuelo}
 
                     </td>
 
                     <td className="p-3">
 
-                      {schedule.id_vuelo.estado}
+                      {item.id_estado.nombre_estado}
 
                     </td>
 
                     <td className="p-3">
 
-                      {new Date(schedule.salida_programada).toLocaleString()}
+                      {item.observacion}
 
                     </td>
 
                     <td className="p-3">
 
-                      {new Date(schedule.llegada_programada).toLocaleString()}
+                      {new Date(item.fecha_cambio).toLocaleString()}
 
                     </td>
 

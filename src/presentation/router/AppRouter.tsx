@@ -44,6 +44,7 @@ import MaintenancePage from "@/presentation/pages/private/infrastructure/Mainten
 import TerminalsPage from "@/presentation/pages/private/infrastructure/TerminalsPage";
 import GatesPage from "@/presentation/pages/private/infrastructure/GatesPage";
 import FlightAuthorizationsPage from "../pages/private/operations/FlightAuthorizationsPage";
+import FlightStatusHistoryPage from "../pages/private/operations/FlightStatusHistoryPage";
 
 
 // Operations
@@ -55,6 +56,7 @@ import TrafficControlPage from "@/presentation/pages/private/operations/TrafficC
 import WeatherPage from "../pages/private/operations/WeatherPage";
 import FlightStatusPage from "../pages/private/operations/FlightStatusPage";
 import StopoversPage from "../pages/private/operations/StopoversPage";
+
 
 
 
@@ -250,6 +252,10 @@ const router = createBrowserRouter([
       {
         path: "/operaciones/autorizaciones-vuelo",
         element: <FlightAuthorizationsPage />,
+      },
+      {
+        path: "/operaciones/historial-estados-vuelo",
+        element: <FlightStatusHistoryPage />,
       },
 
 

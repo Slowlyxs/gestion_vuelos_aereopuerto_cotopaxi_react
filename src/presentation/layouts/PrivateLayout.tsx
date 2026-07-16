@@ -132,7 +132,7 @@ export default function PrivateLayout() {
 
           <SidebarItem
             to="/private/operaciones/horarios"
-            label="Horarios"
+            label="Horarios programados"
           />
 
 
@@ -154,6 +154,10 @@ export default function PrivateLayout() {
           <SidebarItem
             to="/private/operaciones/control-trafico"
             label="Control tráfico"
+          />
+          <SidebarItem
+            to="/operaciones/historial-estados-vuelo"
+            label="Historial estado de vuelos"
           />
 
 
