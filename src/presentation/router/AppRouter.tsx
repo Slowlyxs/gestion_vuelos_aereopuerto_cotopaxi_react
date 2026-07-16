@@ -57,6 +57,7 @@ import WeatherPage from "../pages/private/operations/WeatherPage";
 import FlightStatusPage from "../pages/private/operations/FlightStatusPage";
 import StopoversPage from "../pages/private/operations/StopoversPage";
 import FlightRecordsPage from '@/presentation/pages/private/operations/FlightRecordsPage'
+import AircraftTypesPage from "@/presentation/pages/private/infrastructure/AircraftTypesPage";
 
 
 
@@ -200,7 +201,10 @@ const router = createBrowserRouter([
 
         element: <GatesPage />,
       },
-
+      {
+        path: "/private/infraestructura/tipos-avion",
+        element: <AircraftTypesPage />,
+      },
 
 
 

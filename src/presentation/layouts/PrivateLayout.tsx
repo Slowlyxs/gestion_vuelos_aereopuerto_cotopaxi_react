@@ -79,6 +79,10 @@ export default function PrivateLayout() {
             to="/private/infraestructura/aviones"
             label="Aviones"
           />
+          <SidebarItem
+            to="/private/infraestructura/tipos-avion"
+            label="Tipos de avión"
+          />
 
 
           <SidebarItem
