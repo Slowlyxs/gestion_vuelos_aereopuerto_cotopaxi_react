@@ -169,11 +169,17 @@ export default function PrivateLayout() {
             label="Tripulación"
           />
 
+          <SidebarItem
+            to="/private/personal/asignacion-pista"
+            label="Asignación de pista"
+          />
+
 
           <SidebarItem
             to="/private/personal/pistas"
             label="Pistas"
           />
+
 
 
 
