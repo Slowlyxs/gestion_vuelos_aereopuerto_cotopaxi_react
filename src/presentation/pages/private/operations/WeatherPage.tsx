@@ -104,7 +104,19 @@ export default function WeatherPage() {
                     </td>
 
                     <td className="p-3">
-                      {item.id_aeropuerto}
+                      <div>
+                        <p className="font-medium">
+                          {item.id_aeropuerto.nombre}
+                        </p>
+
+                        <p className="text-sm text-muted-foreground">
+                          {item.id_aeropuerto.ciudad}, {item.id_aeropuerto.pais}
+                        </p>
+
+                        <p className="text-sm">
+                          Código: {item.id_aeropuerto.codigo_iata}
+                        </p>
+                      </div>
                     </td>
 
                   </tr>

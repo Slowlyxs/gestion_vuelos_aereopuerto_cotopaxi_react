@@ -300,13 +300,7 @@ const router = createBrowserRouter([
 
       // =====================
       // OThers
-      // ===
-
-      {
-        path: "/private/otros/clima",
-
-        element: <RunwaysPage />,
-      },      
+      // ===      
 
 
     ],
