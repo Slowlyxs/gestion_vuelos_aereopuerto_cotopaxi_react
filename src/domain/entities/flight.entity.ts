@@ -13,7 +13,7 @@ export interface Aircraft {
 }
 
 export interface Flight {
-  id_vuelo: number;
+  id: number;
   codigo_vuelo: string;
   fecha: string;
   estado: string;

@@ -55,12 +55,12 @@ export default function FlightsPage() {
               {flights.map((flight) => (
 
                 <tr
-                  key={flight.id_vuelo}
+                  key={flight.id}
                   className="border-b last:border-b-0"
                 >
 
                   <td className="p-3">
-                    {flight.id_vuelo}
+                    {flight.id}
                   </td>
 
                   <td className="p-3">
