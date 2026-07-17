@@ -57,7 +57,25 @@ export default function MaintenancePage() {
                   </td>
 
                   <td className="p-3">
-                    {maintenance.id_avion}
+                    <div className="space-y-1">
+
+                      <p className="font-semibold">
+                        {maintenance.id_avion.modelo}
+                      </p>
+
+                      <p className="text-sm text-muted-foreground">
+                        Matrícula: {maintenance.id_avion.matricula}
+                      </p>
+
+                      <p className="text-sm text-muted-foreground">
+                        Capacidad: {maintenance.id_avion.capacidad} pasajeros
+                      </p>
+
+                      <p className="text-sm">
+                        Aerolínea: {maintenance.id_avion.aerolinea.nombre}
+                      </p>
+
+                    </div>
                   </td>
 
                   <td className="p-3">

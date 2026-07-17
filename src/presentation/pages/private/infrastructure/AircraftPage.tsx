@@ -96,7 +96,17 @@ export default function AircraftPage() {
                     </td>
 
                     <td className="p-3">
-                      {item.id_aerolinea}
+                      <td className="p-3">
+                        <div>
+                          <p className="font-medium">
+                            {item.id_aerolinea.nombre}
+                          </p>
+
+                          <p className="text-sm text-muted-foreground">
+                            {item.id_aerolinea.pais}
+                          </p>
+                        </div>
+                      </td>
                     </td>
 
                   </tr>
