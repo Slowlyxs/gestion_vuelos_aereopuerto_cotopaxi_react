@@ -39,10 +39,12 @@ import DashboardPage from "@/presentation/pages/private/dashboard/DashboardPage"
 
 // Infrastructure
 import AirportsPage from "@/presentation/pages/private/infrastructure/AirportsPage";
-import AircraftPage from "@/presentation/pages/private/infrastructure/AircraftPage";
+import AircraftPage from "../pages/private/infrastructure/AircraftPage";
 import MaintenancePage from "@/presentation/pages/private/infrastructure/MaintenancePage";
 import TerminalsPage from "@/presentation/pages/private/infrastructure/TerminalsPage";
 import GatesPage from "@/presentation/pages/private/infrastructure/GatesPage";
+import FlightAuthorizationsPage from "../pages/private/operations/FlightAuthorizationsPage";
+import FlightStatusHistoryPage from "../pages/private/operations/FlightStatusHistoryPage";
 
 
 // Operations
@@ -51,13 +53,20 @@ import RoutesPage from "@/presentation/pages/private/operations/RoutesPage";
 import SchedulesPage from "@/presentation/pages/private/operations/SchedulesPage";
 import IncidentsPage from "@/presentation/pages/private/operations/IncidentsPage";
 import TrafficControlPage from "@/presentation/pages/private/operations/TrafficControlPage";
+import WeatherPage from "../pages/private/operations/WeatherPage";
+import FlightStatusPage from "../pages/private/operations/FlightStatusPage";
+import StopoversPage from "../pages/private/operations/StopoversPage";
+
+
 
 
 // Staff
 import EmployeesPage from "@/presentation/pages/private/staff/EmployeesPage";
 import PilotsPage from "@/presentation/pages/private/staff/PilotsPage";
 import CrewPage from "@/presentation/pages/private/staff/CrewPage";
-import RunwaysPage from "@/presentation/pages/private/staff/RunwaysPage";
+import CrewAssignmentsPage from "../pages/private/staff/CrewAssignmentsPage";
+import RunwayAssignmentsPage from "@/presentation/pages/private/staff/RunwayAssignmentsPage";
+
 
 
 
@@ -157,6 +166,10 @@ const router = createBrowserRouter([
 
         element: <AirportsPage />,
       },
+      {
+        path: "/operaciones/clima",
+        element: <WeatherPage />,
+      },
 
 
       {
@@ -206,6 +219,10 @@ const router = createBrowserRouter([
 
         element: <RoutesPage />,
       },
+      {
+        path: "/operaciones/escalas",
+        element: <StopoversPage />,
+      },
 
 
       {
@@ -226,6 +243,19 @@ const router = createBrowserRouter([
         path: "/private/operaciones/control-trafico",
 
         element: <TrafficControlPage />,
+      },
+
+      {
+        path: "/operaciones/estado-vuelo",
+        element: <FlightStatusPage />,
+      },
+      {
+        path: "/operaciones/autorizaciones-vuelo",
+        element: <FlightAuthorizationsPage />,
+      },
+      {
+        path: "/operaciones/historial-estados-vuelo",
+        element: <FlightStatusHistoryPage />,
       },
 
 
@@ -256,12 +286,16 @@ const router = createBrowserRouter([
 
         element: <CrewPage />,
       },
+      {
+        path: "/personal/asignaciones-tripulacion",
+        element: <CrewAssignmentsPage />,
+      },
 
 
       {
-        path: "/private/personal/pistas",
+        path: "/private/personal/asignacion-pista",
 
-        element: <RunwaysPage />,
+        element: <RunwayAssignmentsPage />,
       },
 
       // =====================
@@ -315,7 +349,7 @@ export default function AppRouter() {
 
   return (
 
-    <RouterProvider router={router}/>
+    <RouterProvider router={router} />
 
   );
 
