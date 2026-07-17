@@ -1,57 +1,44 @@
-import { create } from "zustand";
+import { create } from 'zustand'
 
-import type { RunwayAssignment } from "@/domain/entities/runway-assignment.entity";
+import type { RunwayAssignment } from '@/domain/entities/runway-assignment.entity'
 
-import { runwayAssignmentFactory } from "@/infrastructure/factories/runway-assignment.factory";
+import { runwayAssignmentFactory } from '@/infrastructure/factories/runway-assignment.factory'
 
 interface RunwayAssignmentState {
+  runwayAssignments: RunwayAssignment[]
+  isLoading: boolean
+  error: string | null
 
-  assignments: RunwayAssignment[];
-
-  isLoading: boolean;
-
-  error: string | null;
-
-  loadAssignments(): Promise<void>;
-
+  loadRunwayAssignments(): Promise<void>
 }
 
-export const useRunwayAssignmentStore = create<RunwayAssignmentState>((set) => ({
+export const useRunwayAssignmentStore =
+  create<RunwayAssignmentState>((set) => ({
+    runwayAssignments: [],
+    isLoading: false,
+    error: null,
 
-  assignments: [],
+    async loadRunwayAssignments() {
+      try {
+        set({
+          isLoading: true,
+          error: null,
+        })
 
-  isLoading: false,
+        const runwayAssignments =
+          await runwayAssignmentFactory.getAll()
 
-  error: null,
+        set({
+          runwayAssignments,
+          isLoading: false,
+        })
+      } catch (error) {
+        console.error(error)
 
-  async loadAssignments() {
-
-    try {
-
-      set({
-        isLoading: true,
-        error: null,
-      });
-
-      const assignments =
-        await runwayAssignmentFactory.getAll();
-
-      set({
-        assignments,
-        isLoading: false,
-      });
-
-    } catch (error) {
-
-      console.error(error);
-
-      set({
-        error: "No se pudieron cargar las asignaciones de pista",
-        isLoading: false,
-      });
-
-    }
-
-  },
-
-}));
+        set({
+          error: 'No se pudieron cargar las asignaciones de pista',
+          isLoading: false,
+        })
+      }
+    },
+  }))

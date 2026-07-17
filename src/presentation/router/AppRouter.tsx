@@ -66,6 +66,7 @@ import PilotsPage from "@/presentation/pages/private/staff/PilotsPage";
 import CrewPage from "@/presentation/pages/private/staff/CrewPage";
 import CrewAssignmentsPage from "../pages/private/staff/CrewAssignmentsPage";
 import RunwayAssignmentsPage from "@/presentation/pages/private/staff/RunwayAssignmentsPage";
+import RunwaysPage from "../pages/private/staff/Runway";
 
 
 
@@ -220,7 +221,7 @@ const router = createBrowserRouter([
         element: <RoutesPage />,
       },
       {
-        path: "/operaciones/escalas",
+        path: "/private/operaciones/escalas",
         element: <StopoversPage />,
       },
 
@@ -296,6 +297,12 @@ const router = createBrowserRouter([
         path: "/private/personal/asignacion-pista",
 
         element: <RunwayAssignmentsPage />,
+      },
+
+      {
+        path: "/private/personal/pistas",
+
+        element: <RunwaysPage />,
       },
 
 
