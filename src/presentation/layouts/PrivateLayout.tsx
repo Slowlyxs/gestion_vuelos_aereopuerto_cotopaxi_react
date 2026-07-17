@@ -110,11 +110,6 @@ export default function PrivateLayout() {
             to="/private/operaciones/vuelos"
             label="Vuelos"
           />
-          <SidebarItem
-            to="/infraestructura/aviones"
-            label="Aviones"
-          />
-
 
           <SidebarItem
             to="/private/operaciones/rutas"
