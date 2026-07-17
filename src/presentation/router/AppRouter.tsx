@@ -287,7 +287,7 @@ const router = createBrowserRouter([
         element: <CrewPage />,
       },
       {
-        path: "/personal/asignaciones-tripulacion",
+        path: "/private/personal/asignacion-tripulacion",
         element: <CrewAssignmentsPage />,
       },
 
@@ -298,9 +298,6 @@ const router = createBrowserRouter([
         element: <RunwayAssignmentsPage />,
       },
 
-      // =====================
-      // OThers
-      // ===      
 
 
     ],

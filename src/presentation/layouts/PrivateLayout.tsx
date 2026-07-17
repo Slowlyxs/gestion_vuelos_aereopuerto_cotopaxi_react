@@ -174,7 +174,7 @@ export default function PrivateLayout() {
             label="Pilotos"
           />
           <SidebarItem
-            to="/personal/asignaciones-tripulacion"
+            to="/private/personal/asignacion-tripulacion"
             label="Asignación de tripulación"
           />
 
@@ -194,17 +194,6 @@ export default function PrivateLayout() {
             to="/private/personal/pistas"
             label="Pistas"
           />
-
-          <p className="mt-6 text-xs font-semibold text-muted-foreground">
-            OTRAS TABLAS:
-          </p>
-
-          <SidebarItem
-            to="/private/otros/clima"
-            label="Clima"
-          />
-
-
 
 
 
