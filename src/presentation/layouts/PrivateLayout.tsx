@@ -69,6 +69,10 @@ export default function PrivateLayout() {
             to="/private/infraestructura/aeropuertos"
             label="Aeropuertos"
           />
+          <SidebarItem
+            to="/private/infraestructura/aerolineas"
+            label="Aerolíneas"
+          />
 
 
           <SidebarItem
@@ -107,28 +111,48 @@ export default function PrivateLayout() {
             label="Vuelos"
           />
 
-
           <SidebarItem
             to="/private/operaciones/rutas"
             label="Rutas"
+          />
+          <SidebarItem
+            to="/operaciones/escalas"
+            label="Escalas"
+          />
+          <SidebarItem
+            to="/operaciones/clima"
+            label="Clima"
           />
 
 
           <SidebarItem
             to="/private/operaciones/horarios"
-            label="Horarios"
+            label="Horarios programados"
           />
+
 
 
           <SidebarItem
             to="/private/operaciones/incidentes"
             label="Incidentes"
           />
+          <SidebarItem
+            to="/operaciones/estado-vuelo"
+            label="Estado de vuelo"
+          />
+          <SidebarItem
+            to="/operaciones/autorizaciones-vuelo"
+            label="Autorizaciones de vuelo"
+          />
 
 
           <SidebarItem
             to="/private/operaciones/control-trafico"
             label="Control tráfico"
+          />
+          <SidebarItem
+            to="/operaciones/historial-estados-vuelo"
+            label="Historial estado de vuelos"
           />
 
 
@@ -149,11 +173,20 @@ export default function PrivateLayout() {
             to="/private/personal/pilotos"
             label="Pilotos"
           />
+          <SidebarItem
+            to="/private/personal/asignacion-tripulacion"
+            label="Asignación de tripulación"
+          />
 
 
           <SidebarItem
             to="/private/personal/tripulaciones"
             label="Tripulación"
+          />
+
+          <SidebarItem
+            to="/private/personal/asignacion-pista"
+            label="Asignación de pista"
           />
 
 
@@ -243,9 +276,9 @@ export default function PrivateLayout() {
 
 interface SidebarItemProps {
 
-  to:string;
+  to: string;
 
-  label:string;
+  label: string;
 
 }
 
@@ -254,7 +287,7 @@ interface SidebarItemProps {
 function SidebarItem({
   to,
   label,
-}:SidebarItemProps){
+}: SidebarItemProps) {
 
 
   return (
