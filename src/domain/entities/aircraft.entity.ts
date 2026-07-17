@@ -1,3 +1,14 @@
+export interface Airline {
+
+  id: number;
+
+  nombre: string;
+
+  pais: string;
+
+}
+
+
 export interface Aircraft {
 
   id_avion: number;
@@ -12,6 +23,6 @@ export interface Aircraft {
 
   image_url: string | null;
 
-  id_aerolinea: number;
+  id_aerolinea: Airline;
 
 }

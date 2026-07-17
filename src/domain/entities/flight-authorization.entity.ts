@@ -1,13 +1,29 @@
-export interface FlightAuthorization {
+export interface Airline {
+  id: number;
+  nombre: string;
+  pais: string;
+}
 
-  id_autorizacion: number;
+export interface Aircraft {
+  id: number;
+  modelo: string;
+  capacidad: number;
+  matricula: string;
+  aerolinea: Airline;
+}
 
-  tipo_autorizacion: string;
-
+export interface Flight {
+  id: number;
+  codigo_vuelo: string;
   fecha: string;
-
   estado: string;
+  id_avion: Aircraft;
+}
 
-  id_vuelo: number;
-
+export interface FlightAuthorization {
+  id_autorizacion: number;
+  tipo_autorizacion: string;
+  fecha: string;
+  estado: string;
+  id_vuelo: Flight;
 }

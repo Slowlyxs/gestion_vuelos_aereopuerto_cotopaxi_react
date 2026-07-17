@@ -110,11 +110,6 @@ export default function PrivateLayout() {
             to="/private/operaciones/vuelos"
             label="Vuelos"
           />
-          <SidebarItem
-            to="/infraestructura/aviones"
-            label="Aviones"
-          />
-
 
           <SidebarItem
             to="/private/operaciones/rutas"
@@ -179,7 +174,7 @@ export default function PrivateLayout() {
             label="Pilotos"
           />
           <SidebarItem
-            to="/personal/asignaciones-tripulacion"
+            to="/private/personal/asignacion-tripulacion"
             label="Asignación de tripulación"
           />
 
@@ -199,7 +194,6 @@ export default function PrivateLayout() {
             to="/private/personal/pistas"
             label="Pistas"
           />
-
 
 
 

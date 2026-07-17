@@ -1,57 +1,44 @@
-import { create } from "zustand";
+import { create } from 'zustand'
 
-import type { CrewAssignment } from "@/domain/entities/crew-assignment.entity";
+import type { CrewAssignment } from '@/domain/entities/crew-assignment.entity'
 
-import { crewAssignmentFactory } from "@/infrastructure/factories/crew-assignment.factory";
+import { crewAssignmentFactory } from '@/infrastructure/factories/crew-assignment.factory'
 
 interface CrewAssignmentState {
+  crewAssignments: CrewAssignment[]
+  isLoading: boolean
+  error: string | null
 
-  assignments: CrewAssignment[];
-
-  isLoading: boolean;
-
-  error: string | null;
-
-  loadAssignments(): Promise<void>;
-
+  loadCrewAssignments(): Promise<void>
 }
 
-export const useCrewAssignmentStore = create<CrewAssignmentState>((set) => ({
+export const useCrewAssignmentStore =
+  create<CrewAssignmentState>((set) => ({
+    crewAssignments: [],
+    isLoading: false,
+    error: null,
 
-  assignments: [],
+    async loadCrewAssignments() {
+      try {
+        set({
+          isLoading: true,
+          error: null,
+        })
 
-  isLoading: false,
+        const crewAssignments =
+          await crewAssignmentFactory.getAll()
 
-  error: null,
+        set({
+          crewAssignments,
+          isLoading: false,
+        })
+      } catch (error) {
+        console.error(error)
 
-  async loadAssignments() {
-
-    try {
-
-      set({
-        isLoading: true,
-        error: null,
-      });
-
-      const assignments =
-        await crewAssignmentFactory.getAll();
-
-      set({
-        assignments,
-        isLoading: false,
-      });
-
-    } catch (error) {
-
-      console.error(error);
-
-      set({
-        error: "No se pudieron cargar las asignaciones de tripulación",
-        isLoading: false,
-      });
-
-    }
-
-  },
-
-}));
+        set({
+          error: 'No se pudieron cargar las asignaciones',
+          isLoading: false,
+        })
+      }
+    },
+  }))

@@ -106,13 +106,6 @@ const router = createBrowserRouter([
 
 
       {
-        path: "/aerolineas",
-
-        element: <AirlinesPage />,
-      },
-
-
-      {
         path: "/login",
 
         element: <LoginPage />,
@@ -166,6 +159,13 @@ const router = createBrowserRouter([
 
         element: <AirportsPage />,
       },
+
+      {
+        path: "/private/infraestructura/aerolineas",
+
+        element: <AirlinesPage />,
+      },
+
       {
         path: "/operaciones/clima",
         element: <WeatherPage />,
@@ -287,7 +287,7 @@ const router = createBrowserRouter([
         element: <CrewPage />,
       },
       {
-        path: "/personal/asignaciones-tripulacion",
+        path: "/private/personal/asignacion-tripulacion",
         element: <CrewAssignmentsPage />,
       },
 
@@ -297,6 +297,7 @@ const router = createBrowserRouter([
 
         element: <RunwayAssignmentsPage />,
       },
+
 
 
     ],

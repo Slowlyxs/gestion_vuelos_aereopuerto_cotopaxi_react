@@ -1,57 +1,44 @@
-import { create } from "zustand";
+import { create } from 'zustand'
 
-import type { FlightAuthorization } from "@/domain/entities/flight-authorization.entity";
+import type { FlightAuthorization } from '@/domain/entities/flight-authorization.entity'
 
-import { flightAuthorizationFactory } from "@/infrastructure/factories/flight-authorization.factory";
+import { flightAuthorizationFactory } from '@/infrastructure/factories/flight-authorization.factory'
 
 interface FlightAuthorizationState {
+  authorizations: FlightAuthorization[]
+  isLoading: boolean
+  error: string | null
 
-  authorizations: FlightAuthorization[];
-
-  isLoading: boolean;
-
-  error: string | null;
-
-  loadAuthorizations(): Promise<void>;
-
+  loadAuthorizations(): Promise<void>
 }
 
-export const useFlightAuthorizationStore = create<FlightAuthorizationState>((set) => ({
+export const useFlightAuthorizationStore =
+  create<FlightAuthorizationState>((set) => ({
+    authorizations: [],
+    isLoading: false,
+    error: null,
 
-  authorizations: [],
+    async loadAuthorizations() {
+      try {
+        set({
+          isLoading: true,
+          error: null,
+        })
 
-  isLoading: false,
+        const authorizations =
+          await flightAuthorizationFactory.getAll()
 
-  error: null,
+        set({
+          authorizations,
+          isLoading: false,
+        })
+      } catch (error) {
+        console.error(error)
 
-  async loadAuthorizations() {
-
-    try {
-
-      set({
-        isLoading: true,
-        error: null,
-      });
-
-      const authorizations =
-        await flightAuthorizationFactory.getAll();
-
-      set({
-        authorizations,
-        isLoading: false,
-      });
-
-    } catch (error) {
-
-      console.error(error);
-
-      set({
-        error: "No se pudieron cargar las autorizaciones de vuelo",
-        isLoading: false,
-      });
-
-    }
-
-  },
-
-}));
+        set({
+          error: 'No se pudieron cargar las autorizaciones',
+          isLoading: false,
+        })
+      }
+    },
+  }))
