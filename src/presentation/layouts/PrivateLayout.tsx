@@ -162,6 +162,16 @@ export default function PrivateLayout() {
             label="Pistas"
           />
 
+          <p className="mt-6 text-xs font-semibold text-muted-foreground">
+            OTRAS TABLAS:
+          </p>
+
+          <SidebarItem
+            to="/private/otros/clima"
+            label="Clima"
+          />
+
+
 
 
         </nav>

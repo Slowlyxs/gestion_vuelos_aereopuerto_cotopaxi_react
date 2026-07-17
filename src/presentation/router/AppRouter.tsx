@@ -264,6 +264,16 @@ const router = createBrowserRouter([
         element: <RunwaysPage />,
       },
 
+      // =====================
+      // OThers
+      // ===
+
+      {
+        path: "/private/otros/clima",
+
+        element: <RunwaysPage />,
+      },      
+
 
     ],
 
