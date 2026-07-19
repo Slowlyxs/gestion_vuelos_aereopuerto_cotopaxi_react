@@ -168,7 +168,7 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/operaciones/clima",
+        path: "/private/operaciones/Clima",
         element: <WeatherPage />,
       },
 
@@ -247,15 +247,15 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/operaciones/estado-vuelo",
+        path: "/private/operaciones/estado-vuelo",
         element: <FlightStatusPage />,
       },
       {
-        path: "/operaciones/autorizaciones-vuelo",
+        path: "/private/operaciones/autorizaciones-vuelo",
         element: <FlightAuthorizationsPage />,
       },
       {
-        path: "/operaciones/historial-estados-vuelo",
+        path: "/private/operaciones/historial-estados-vuelo",
         element: <FlightStatusHistoryPage />,
       },
 
@@ -283,7 +283,7 @@ const router = createBrowserRouter([
 
 
       {
-        path: "/private/personal/tripulaciones",
+        path: "/private/personal/tripulacion",
 
         element: <CrewPage />,
       },

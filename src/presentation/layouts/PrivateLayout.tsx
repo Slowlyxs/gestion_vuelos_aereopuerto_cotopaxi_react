@@ -116,11 +116,11 @@ export default function PrivateLayout() {
             label="Rutas"
           />
           <SidebarItem
-            to="/operaciones/escalas"
+            to="/private/operaciones/escalas"
             label="Escalas"
           />
           <SidebarItem
-            to="/operaciones/clima"
+            to="/private/operaciones/Clima"
             label="Clima"
           />
 
@@ -130,18 +130,16 @@ export default function PrivateLayout() {
             label="Horarios programados"
           />
 
-
-
           <SidebarItem
             to="/private/operaciones/incidentes"
             label="Incidentes"
           />
           <SidebarItem
-            to="/operaciones/estado-vuelo"
+            to="/private/operaciones/estado-vuelo"
             label="Estado de vuelo"
           />
           <SidebarItem
-            to="/operaciones/autorizaciones-vuelo"
+            to="/private/operaciones/autorizaciones-vuelo"
             label="Autorizaciones de vuelo"
           />
 
@@ -151,7 +149,7 @@ export default function PrivateLayout() {
             label="Control tráfico"
           />
           <SidebarItem
-            to="/operaciones/historial-estados-vuelo"
+            to="/private/operaciones/historial-estados-vuelo"
             label="Historial estado de vuelos"
           />
 
@@ -180,7 +178,7 @@ export default function PrivateLayout() {
 
 
           <SidebarItem
-            to="/private/personal/tripulaciones"
+            to="/private/personal/tripulacion"
             label="Tripulación"
           />
 
