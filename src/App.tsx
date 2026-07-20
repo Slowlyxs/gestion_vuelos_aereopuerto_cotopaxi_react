@@ -1,23 +1,21 @@
-// src/App.tsx — SOLO PARA VERIFICACIÓN, eliminar después
-import { useEffect } from 'react'
-import AppRouter from './presentation/router/AppRouter'
-import { apiClient } from './infrastructure/http/axios-client'
-import { Toaster } from 'sonner'
-
+import { useEffect, useState } from "react";
+import AppRouter from "@/presentation/router/AppRouter";
+import SplashPage from "@/presentation/pages/SplashPage";
 
 export default function App() {
-  useEffect(() => {
-    apiClient.get('/products/').then((res) => {
-      console.log('[apiClient] Productos:', res.data)
-    }).catch((err) => {
-      console.error('[apiClient] Error:', err)
-    })
-  }, [])
+  const [showSplash, setShowSplash] = useState(true);
 
-  return (
-    <>
-      <AppRouter />
-      <Toaster richColors position="top-right" />
-    </>
-  )
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSplash(false);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (showSplash) {
+    return <SplashPage />;
+  }
+
+  return <AppRouter />;
 }
