@@ -1,45 +1,165 @@
-import { create } from "zustand";
-import type { Airport } from "@/domain/entities/airport.entity";
-import { getAirportsUseCase } from "@/application/use-cases/get-airports.usecase";
-import { uploadAirportImageUseCase } from "@/application/use-cases/upload-airport-image.usecase"; // ← nuevo
+import { create } from 'zustand'
+
+import type {
+  Airport,
+  AirportPayload,
+} from '@/domain/entities/airport.entity'
+
+import { airportFactory } from '@/infrastructure/factories/airport.factory'
 
 interface AirportState {
-  airports: Airport[];
-  isLoading: boolean;
-  error: string | null;
+  airports: Airport[]
 
-  loadAirports(): Promise<void>;
-  uploadAirportImage(id: number, file: File): Promise<void>; // ← nuevo
+  isLoading: boolean
+  isSaving: boolean
+  deletingId: number | null
+
+  error: string | null
+
+  loadAirports(): Promise<void>
+
+  createAirport(
+    payload: AirportPayload,
+  ): Promise<void>
+
+  updateAirport(
+    id: number,
+    payload: AirportPayload,
+  ): Promise<void>
+
+  deleteAirport(id: number): Promise<void>
+
+  clearError(): void
 }
 
-export const useAirportStore = create<AirportState>((set, get) => ({
-  airports: [],
-  isLoading: false,
-  error: null,
+export const useAirportStore = create<AirportState>(
+  (set) => ({
+    airports: [],
 
-  async loadAirports() {
-    try {
-      set({ isLoading: true, error: null });
-      const airports = await getAirportsUseCase();
-      set({ airports, isLoading: false });
-    } catch (error) {
-      console.error(error);
-      set({ error: "No se pudieron cargar los aeropuertos", isLoading: false });
-    }
-  },
+    isLoading: false,
+    isSaving: false,
+    deletingId: null,
 
-  // ← nuevo
-  async uploadAirportImage(id, file) {
-    try {
-      const updated = await uploadAirportImageUseCase(id, file);
+    error: null,
+
+    async loadAirports() {
+      try {
+        set({
+          isLoading: true,
+          error: null,
+        })
+
+        const airports = await airportFactory.getAll()
+
+        set({
+          airports,
+          isLoading: false,
+        })
+      } catch (error) {
+        console.error(error)
+
+        set({
+          isLoading: false,
+          error:
+            'No se pudieron cargar los aeropuertos.',
+        })
+      }
+    },
+
+    async createAirport(payload) {
+      try {
+        set({
+          isSaving: true,
+          error: null,
+        })
+
+        const createdAirport =
+          await airportFactory.create(payload)
+
+        set((state) => ({
+          airports: [
+            createdAirport,
+            ...state.airports,
+          ],
+          isSaving: false,
+        }))
+      } catch (error) {
+        console.error(error)
+
+        set({
+          isSaving: false,
+          error:
+            'No se pudo crear el aeropuerto.',
+        })
+
+        throw error
+      }
+    },
+
+    async updateAirport(id, payload) {
+      try {
+        set({
+          isSaving: true,
+          error: null,
+        })
+
+        const updatedAirport =
+          await airportFactory.update(id, payload)
+
+        set((state) => ({
+          airports: state.airports.map((airport) =>
+            airport.id_aeropuerto === id
+              ? updatedAirport
+              : airport,
+          ),
+          isSaving: false,
+        }))
+      } catch (error) {
+        console.error(error)
+
+        set({
+          isSaving: false,
+          error:
+            'No se pudo actualizar el aeropuerto.',
+        })
+
+        throw error
+      }
+    },
+
+    async deleteAirport(id) {
+      try {
+        set({
+          deletingId: id,
+          error: null,
+        })
+
+        await airportFactory.remove(id)
+
+        set((state) => ({
+          airports: state.airports.filter(
+            (airport) =>
+              airport.id_aeropuerto !== id,
+          ),
+          deletingId: null,
+        }))
+      } catch (error) {
+        console.error(error)
+
+        set({
+          deletingId: null,
+          error:
+            'No se pudo eliminar el aeropuerto. Puede tener registros relacionados.',
+        })
+
+        throw error
+      }
+    },
+
+    clearError() {
       set({
-        airports: get().airports.map((a) =>
-          a.id_aeropuerto === id ? updated : a
-        ),
-      });
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  },
-}));
+        error: null,
+      })
+    },
+  }),
+)
