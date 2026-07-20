@@ -52,6 +52,8 @@ import EmployeesPage from "@/presentation/pages/private/staff/EmployeesPage";
 import PilotsPage from "@/presentation/pages/private/staff/PilotsPage";
 import CrewPage from "@/presentation/pages/private/staff/CrewPage";
 import CrewAssignmentsPage from "../pages/private/staff/CrewAssignmentsPage";
+import AirlinesPagePublic from "@/presentation/pages/public/AirlinesPage";
+import AirlinesPagePrivate from "../pages/private/infrastructure/AirlinesPage";
 
 
 const router = createBrowserRouter([
@@ -65,7 +67,7 @@ const router = createBrowserRouter([
       { path: "/", element: <HomePage /> },
       { path: "/vuelos", element: <FlightsPage /> },
       { path: "/vuelos/:id", element: <FlightDetailPage /> },
-      { path: "/aerolineas", element: <AirlinesPage /> },
+      { path: "/aerolineas", element: <AirlinesPagePublic/> },
       { path: "/login", element: <LoginPage /> },
       { path: "/informacion", element: <InformationPage />,},
       { path: "/contacto", element: <ContactPage />, },
@@ -88,7 +90,7 @@ const router = createBrowserRouter([
 
       // Infrastructure (TECNICO)
       { path: "/private/infraestructura/aeropuertos", element: <AirportsPage /> },
-      { path: "/private/infraestructura/aerolineas", element: <AirlinesPage /> },
+      { path: "/private/infraestructura/aerolineas", element: <AirlinesPagePrivate /> },
       { path: "/private/infraestructura/aviones", element: <AircraftPage /> },
       { path: "/private/infraestructura/mantenimientos", element: <MaintenancePage /> },
       { path: "/private/infraestructura/terminales", element: <TerminalsPage /> },

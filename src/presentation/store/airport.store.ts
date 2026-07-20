@@ -1,90 +1,165 @@
-import { create } from "zustand";
+import { create } from 'zustand'
 
-import type { Airport } 
-from "@/domain/entities/airport.entity";
+import type {
+  Airport,
+  AirportPayload,
+} from '@/domain/entities/airport.entity'
 
-
-import { getAirportsUseCase } 
-from "@/application/use-cases/get-airports.usecase";
-
-
+import { airportFactory } from '@/infrastructure/factories/airport.factory'
 
 interface AirportState {
+  airports: Airport[]
 
-  airports: Airport[];
+  isLoading: boolean
+  isSaving: boolean
+  deletingId: number | null
 
-  isLoading:boolean;
+  error: string | null
 
-  error:string | null;
+  loadAirports(): Promise<void>
 
+  createAirport(
+    payload: AirportPayload,
+  ): Promise<void>
 
-  loadAirports():Promise<void>;
+  updateAirport(
+    id: number,
+    payload: AirportPayload,
+  ): Promise<void>
 
+  deleteAirport(id: number): Promise<void>
+
+  clearError(): void
 }
 
+export const useAirportStore = create<AirportState>(
+  (set) => ({
+    airports: [],
 
+    isLoading: false,
+    isSaving: false,
+    deletingId: null,
 
-export const useAirportStore =
-create<AirportState>((set)=>({
+    error: null,
 
+    async loadAirports() {
+      try {
+        set({
+          isLoading: true,
+          error: null,
+        })
 
-  airports:[],
+        const airports = await airportFactory.getAll()
 
+        set({
+          airports,
+          isLoading: false,
+        })
+      } catch (error) {
+        console.error(error)
 
-  isLoading:false,
+        set({
+          isLoading: false,
+          error:
+            'No se pudieron cargar los aeropuertos.',
+        })
+      }
+    },
 
+    async createAirport(payload) {
+      try {
+        set({
+          isSaving: true,
+          error: null,
+        })
 
-  error:null,
+        const createdAirport =
+          await airportFactory.create(payload)
 
+        set((state) => ({
+          airports: [
+            createdAirport,
+            ...state.airports,
+          ],
+          isSaving: false,
+        }))
+      } catch (error) {
+        console.error(error)
 
+        set({
+          isSaving: false,
+          error:
+            'No se pudo crear el aeropuerto.',
+        })
 
-  async loadAirports(){
+        throw error
+      }
+    },
 
+    async updateAirport(id, payload) {
+      try {
+        set({
+          isSaving: true,
+          error: null,
+        })
 
-    try {
+        const updatedAirport =
+          await airportFactory.update(id, payload)
 
+        set((state) => ({
+          airports: state.airports.map((airport) =>
+            airport.id_aeropuerto === id
+              ? updatedAirport
+              : airport,
+          ),
+          isSaving: false,
+        }))
+      } catch (error) {
+        console.error(error)
 
+        set({
+          isSaving: false,
+          error:
+            'No se pudo actualizar el aeropuerto.',
+        })
+
+        throw error
+      }
+    },
+
+    async deleteAirport(id) {
+      try {
+        set({
+          deletingId: id,
+          error: null,
+        })
+
+        await airportFactory.remove(id)
+
+        set((state) => ({
+          airports: state.airports.filter(
+            (airport) =>
+              airport.id_aeropuerto !== id,
+          ),
+          deletingId: null,
+        }))
+      } catch (error) {
+        console.error(error)
+
+        set({
+          deletingId: null,
+          error:
+            'No se pudo eliminar el aeropuerto. Puede tener registros relacionados.',
+        })
+
+        throw error
+      }
+    },
+
+    clearError() {
       set({
-        isLoading:true,
-        error:null
-      });
-
-
-
-      const airports =
-        await getAirportsUseCase();
-
-
-
-      set({
-
-        airports,
-
-        isLoading:false
-
-      });
-
-
-
-    }catch(error){
-
-
-      console.error(error);
-
-
-      set({
-
-        error:"No se pudieron cargar los aeropuertos",
-
-        isLoading:false
-
-      });
-
-
-    }
-
-
-  }
-
-
-}));
+        error: null,
+      })
+    },
+  }),
+)

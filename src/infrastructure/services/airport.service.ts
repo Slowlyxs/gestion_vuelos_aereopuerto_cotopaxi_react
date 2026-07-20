@@ -1,21 +1,78 @@
-// src/infrastructure/services/airport.service.ts
+import { apiClient } from '../http/axios-client'
 
-import { apiClient } from "../http/axios-client";
+import type {
+  Airport,
+  AirportPayload,
+} from '@/domain/entities/airport.entity'
 
-import type { Airport } from "@/domain/entities/airport.entity";
+interface PaginatedResponse<T> {
+  count: number
+  next: string | null
+  previous: string | null
+  results: T[]
+}
 
+function createAirportFormData(
+  payload: AirportPayload,
+): FormData {
+  const formData = new FormData()
+
+  formData.append('nombre', payload.nombre)
+  formData.append('ciudad', payload.ciudad)
+  formData.append('pais', payload.pais)
+  formData.append(
+    'codigo_iata',
+    payload.codigo_iata.toUpperCase(),
+  )
+
+  if (payload.image instanceof File) {
+    formData.append('image', payload.image)
+  }
+
+  return formData
+}
 
 export const airportService = {
+  async getAll(): Promise<Airport[]> {
+    const response = await apiClient.get<
+      PaginatedResponse<Airport> | Airport[]
+    >('/aeropuertos/')
 
-async getAll(): Promise<Airport[]> {
+    const data = response.data
 
-  const response = await apiClient.get(
-    "/aeropuertos/"
-  );
+    return Array.isArray(data)
+      ? data
+      : data.results ?? []
+  },
 
-  console.log("AEROPUERTOS API:", response.data);
+  async create(
+    payload: AirportPayload,
+  ): Promise<Airport> {
+    const formData = createAirportFormData(payload)
 
-  return response.data.results;
+    const response = await apiClient.post<Airport>(
+      '/aeropuertos/',
+      formData,
+    )
 
+    return response.data
+  },
+
+  async update(
+    id: number,
+    payload: AirportPayload,
+  ): Promise<Airport> {
+    const formData = createAirportFormData(payload)
+
+    const response = await apiClient.patch<Airport>(
+      `/aeropuertos/${id}/`,
+      formData,
+    )
+
+    return response.data
+  },
+
+  async remove(id: number): Promise<void> {
+    await apiClient.delete(`/aeropuertos/${id}/`)
+  },
 }
-};

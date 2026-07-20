@@ -1,11 +1,11 @@
-export interface Flight {
+export interface CrewAssignmentFlight {
   id: number
   codigo_vuelo: string
   fecha: string
   estado: string
 }
 
-export interface Employee {
+export interface CrewAssignmentEmployee {
   id: number
   nombre: string
   cargo: string
@@ -13,6 +13,11 @@ export interface Employee {
 
 export interface CrewAssignment {
   id_asignacion: number
-  id_vuelo: Flight
-  id_empleado: Employee
+  id_vuelo: CrewAssignmentFlight
+  id_empleado: CrewAssignmentEmployee
+}
+
+export interface CrewAssignmentPayload {
+  id_vuelo: number
+  id_empleado: number
 }
