@@ -10,6 +10,7 @@ import ProtectedRoute from "./ProtectedRoute";
 
 import PublicLayout from "@/presentation/layouts/PublicLayout";
 import PrivateLayout from "@/presentation/layouts/PrivateLayout";
+import SplashPage from "@/presentation/pages/SplashPage";
 
 // PUBLIC PAGES
 import HomePage from "@/presentation/pages/public/HomePage";
@@ -17,6 +18,8 @@ import FlightsPage from "@/presentation/pages/public/FlightsPage";
 import FlightDetailPage from "@/presentation/pages/public/FlightDetailPage";
 import AirlinesPage from "@/presentation/pages/public/AirlinesPage";
 import LoginPage from "@/presentation/pages/auth/LoginPage";
+import InformationPage from "@/presentation/pages/public/InformationPage";
+import ContactPage from "@/presentation/pages/public/ContactPage";
 
 // DASHBOARD
 import DashboardPage from "@/presentation/pages/private/dashboard/DashboardPage";
@@ -64,6 +67,9 @@ const router = createBrowserRouter([
       { path: "/vuelos/:id", element: <FlightDetailPage /> },
       { path: "/aerolineas", element: <AirlinesPage /> },
       { path: "/login", element: <LoginPage /> },
+      { path: "/informacion", element: <InformationPage />,},
+      { path: "/contacto", element: <ContactPage />, },
+      { path: "/splash", element: <SplashPage />, },
     ],
   },
 
