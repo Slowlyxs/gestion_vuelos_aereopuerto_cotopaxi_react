@@ -59,7 +59,7 @@ export default function LoginPage() {
    */
   const from =
     (location.state as { from?: Location })?.from?.pathname
-    ?? '/private/dashboard'
+    ?? '/'
 
 
 
@@ -80,7 +80,7 @@ export default function LoginPage() {
     if(user){
 
       navigate(
-        '/private/dashboard',
+        '/',
         {
           replace:true
         }

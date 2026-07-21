@@ -22,7 +22,7 @@ interface AuthActions {
   /** Inicia sesión con username y password. */
   login(username: string, password: string): Promise<void>
   /** Registra un nuevo usuario y lo autentica automáticamente. */
-  register(username: string, email: string, password: string): Promise<void>
+  register(username: string, email: string, password: string, password2: string): Promise<void>
   /** Cierra la sesión: invalida el token en el servidor y limpia el estado. */
   logout(): Promise<void>
   /**
@@ -72,17 +72,27 @@ export const useAuthStore = create<AuthState & AuthActions>((set, get) => {
       }
     },
 
-    async register(username, email, password) {
+    async register(username, email, password, password2) {
       set({ isLoading: true, error: null })
+
       try {
-        const { user, tokens } = await authUseCase.register({ username, email, password })
+        const { user, tokens } = await authUseCase.register({
+          username,
+          email,
+          password,
+          password2,
+        })
+
         set({ user, tokens, isLoading: false })
+
       } catch (err: unknown) {
         const apiErr = err as { detail?: string; message?: string }
+
         set({
           isLoading: false,
           error: apiErr.detail ?? apiErr.message ?? 'Error al registrarse',
         })
+
         throw err
       }
     },

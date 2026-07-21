@@ -14,7 +14,7 @@ export interface AuthSession {
  */
 export interface AuthRepository {
   login(username: string, password: string): Promise<AuthSession>
-  register(username: string, email: string, password: string): Promise<AuthSession>
+  register( username: string, email: string, password: string, password2: string): Promise<AuthSession>
   /** Invalida el refresh token en el servidor y limpia los tokens locales. */
   logout(): Promise<void>
   /** Valida la sesión actual contra el servidor. Lanza ApiException si el token no es válido. */

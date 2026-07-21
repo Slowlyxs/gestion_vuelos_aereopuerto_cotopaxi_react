@@ -42,9 +42,6 @@ apiClient.interceptors.request.use(
   (config) => {
     const token = localTokenStorage.getAccessToken()
 
-    console.log('=== REQUEST ===')
-    console.log('URL:', config.url)
-    console.log('TOKEN:', token)
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`

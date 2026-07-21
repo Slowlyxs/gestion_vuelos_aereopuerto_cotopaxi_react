@@ -88,10 +88,6 @@ export const airportService = {
 
       return response.data
     } catch (error: any) {
-      console.log('=== ERROR COMPLETO ===')
-      console.log('STATUS:', error.response?.status)
-      console.log('DATA:', error.response?.data)
-      console.log('HEADERS:', error.config?.headers)
 
       throw error
     }

@@ -71,7 +71,7 @@ export default function RegisterPage() {
   async function onSubmit(data: RegisterFormData) {
     clearError()
     try {
-      await registerUser(data.username, data.email, data.password)
+      await registerUser(data.username, data.email, data.password, data.confirmPassword)
       navigate('/', { replace: true })
     } catch {
       // El error ya está en el store

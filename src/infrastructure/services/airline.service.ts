@@ -48,6 +48,11 @@ export const airlineService = {
     const response = await apiClient.post<Airline>(
       '/aerolineas/',
       formData,
+       {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
     )
 
     return response.data
@@ -62,6 +67,11 @@ export const airlineService = {
     const response = await apiClient.patch<Airline>(
       `/aerolineas/${id}/`,
       formData,
+       {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
     )
 
     return response.data

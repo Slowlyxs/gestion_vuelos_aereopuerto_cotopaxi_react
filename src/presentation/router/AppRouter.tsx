@@ -54,6 +54,7 @@ import CrewPage from "@/presentation/pages/private/staff/CrewPage";
 import CrewAssignmentsPage from "../pages/private/staff/CrewAssignmentsPage";
 import AirlinesPagePublic from "@/presentation/pages/public/AirlinesPage";
 import AirlinesPagePrivate from "../pages/private/infrastructure/AirlinesPage";
+import RegisterPage from "../pages/auth/RegisterPage";
 
 
 const router = createBrowserRouter([
@@ -72,6 +73,7 @@ const router = createBrowserRouter([
       { path: "/informacion", element: <InformationPage />,},
       { path: "/contacto", element: <ContactPage />, },
       { path: "/splash", element: <SplashPage />, },
+      { path: "/register", element: <RegisterPage/> }
     ],
   },
 
