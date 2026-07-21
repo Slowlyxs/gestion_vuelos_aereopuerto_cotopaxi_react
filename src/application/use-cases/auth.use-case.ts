@@ -11,7 +11,7 @@ export class AuthUseCase {
   }
 
   register(dto: RegisterDto): Promise<AuthSession> {
-    return this.authRepository.register(dto.username, dto.email, dto.password)
+    return this.authRepository.register(dto.username, dto.email, dto.password,dto.password2)
   }
 
   logout(): Promise<void> {

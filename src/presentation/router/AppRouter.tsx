@@ -16,7 +16,6 @@ import SplashPage from "@/presentation/pages/SplashPage";
 import HomePage from "@/presentation/pages/public/HomePage";
 import FlightsPage from "@/presentation/pages/public/FlightsPage";
 import FlightDetailPage from "@/presentation/pages/public/FlightDetailPage";
-import AirlinesPage from "@/presentation/pages/public/AirlinesPage";
 import LoginPage from "@/presentation/pages/auth/LoginPage";
 import InformationPage from "@/presentation/pages/public/InformationPage";
 import ContactPage from "@/presentation/pages/public/ContactPage";
