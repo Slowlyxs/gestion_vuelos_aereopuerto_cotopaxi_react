@@ -108,28 +108,37 @@ export default function PublicLayout() {
 
           {/* Acceso y menú móvil */}
           <div className="flex items-center gap-2">
-           {user?.is_staff ? (
-  <Button
-    asChild
-    className="hidden sm:inline-flex"
-  >
-    <Link to="/private/dashboard">
-      <LayoutDashboard className="mr-2 h-4 w-4" />
-      Panel privado
-    </Link>
-  </Button>
-) : !user ? (
-  <Button
-    asChild
-    className="hidden sm:inline-flex"
-  >
-    <Link to="/login">
-      <LogIn className="mr-2 h-4 w-4" />
-      Ingresar
-    </Link>
-  </Button>
-) : null}
+           {user ? (
+                <Button
+                  asChild
+                  className="hidden sm:inline-flex"
+                >
+                  <Link to="/private/dashboard">
+                    <LayoutDashboard className="mr-2 h-4 w-4" />
+                    Panel privado
+                  </Link>
+                </Button>
+              ) : !user ? (
+                <Button
+                  asChild
+                  className="hidden sm:inline-flex"
+                >
+                  <Link to="/login">
+                    <LogIn className="mr-2 h-4 w-4" />
+                    Ingresar
+                  </Link>
+                </Button>
+              ) : null}
 
+            <Button
+              asChild
+              variant="outline"
+              className="hidden sm:inline-flex"
+            >
+              <Link to="/reservas">
+                Reservar vuelo
+              </Link>
+            </Button>
             <Button
               type="button"
               variant="ghost"

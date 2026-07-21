@@ -1,21 +1,30 @@
-import { useEffect, useState } from "react";
-import AppRouter from "@/presentation/router/AppRouter";
-import SplashPage from "@/presentation/pages/SplashPage";
+import { useEffect, useState } from 'react'
+
+import AppRouter from '@/presentation/router/AppRouter'
+import SplashPage from '@/presentation/pages/SplashPage'
+
+import { useAuthStore } from '@/presentation/store/auth.store'
 
 export default function App() {
-  const [showSplash, setShowSplash] = useState(true);
+  const [showSplash, setShowSplash] = useState(true)
+
+  const loadSession = useAuthStore(
+    (state) => state.loadSession,
+  )
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowSplash(false);
-    }, 5000);
+    loadSession()
 
-    return () => clearTimeout(timer);
-  }, []);
+    const timer = setTimeout(() => {
+      setShowSplash(false)
+    }, 5000)
+
+    return () => clearTimeout(timer)
+  }, [loadSession])
 
   if (showSplash) {
-    return <SplashPage />;
+    return <SplashPage />
   }
 
-  return <AppRouter />;
+  return <AppRouter />
 }
