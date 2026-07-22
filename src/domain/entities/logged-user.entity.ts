@@ -4,4 +4,5 @@ export interface LoggedUser {
   email: string
   is_staff: boolean
   role: string | null
+  saldo: number
 }

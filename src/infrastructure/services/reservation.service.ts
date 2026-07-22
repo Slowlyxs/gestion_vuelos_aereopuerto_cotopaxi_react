@@ -1,33 +1,35 @@
-// reservation.service.ts
-
 import { apiClient } from '../http/axios-client'
 
+import type {
+  Reservation,
+  CreateReservationPayload,
+} from '@/domain/entities/reservation.entity'
+
 export const reservationService = {
+  async getAll(): Promise<Reservation[]> {
+    const response = await apiClient.get('/reservas/')
 
-  async getAll() {
-
-    const { data } = await apiClient.get(
-      '/reservas/'
-    )
+    const data = response.data
 
     return Array.isArray(data)
       ? data
-      : data.results
+      : data.results ?? []
   },
 
   async create(
     vuelo: number,
-    cantidad_pasajeros: number
-  ) {
+    cantidad: number,
+  ): Promise<Reservation> {
+    const payload: CreateReservationPayload = {
+      vuelo,
+      cantidad_pasajeros: cantidad,
+    }
 
-    const { data } = await apiClient.post(
+    const response = await apiClient.post(
       '/reservas/',
-      {
-        vuelo,
-        cantidad_pasajeros
-      }
+      payload,
     )
 
-    return data
-  }
+    return response.data
+  },
 }

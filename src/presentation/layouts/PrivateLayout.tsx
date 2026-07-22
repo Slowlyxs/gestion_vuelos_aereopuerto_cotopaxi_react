@@ -293,7 +293,6 @@ export default function PrivateLayout() {
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
               to="/"
-              target="_blank"
               className="hidden h-10 items-center gap-2 rounded-lg border bg-card px-3 text-sm font-medium text-muted-foreground transition hover:bg-muted hover:text-foreground sm:flex"
             >
               <ExternalLink className="h-4 w-4" />

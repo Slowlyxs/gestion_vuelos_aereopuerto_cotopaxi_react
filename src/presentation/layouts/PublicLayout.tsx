@@ -6,55 +6,61 @@ import {
   NavLink,
   Outlet,
   useLocation,
+  useNavigate,
 } from 'react-router-dom'
 import {
   Building2,
   LayoutDashboard,
   LogIn,
+  LogOut,
   Mail,
   MapPin,
   Menu,
   Phone,
   Plane,
+  Ticket,
+  User,
   X,
 } from 'lucide-react'
 
 import { useAuthStore } from '@/presentation/store/auth.store'
+import { hasPrivilegedAccess } from '@/infrastructure/config/permissions'
 import { Button } from '@/presentation/components/ui/button'
 
 const navigationItems = [
-  {
-    label: 'Inicio',
-    to: '/',
-  },
-  {
-    label: 'Vuelos',
-    to: '/vuelos',
-  },
-  {
-    label: 'Aerolíneas',
-    to: '/aerolineas',
-  },
-  {
-    label: 'Información',
-    to: '/informacion',
-  },
-  {
-    label: 'Contacto',
-    to: '/contacto',
-  },
+  { label: 'Inicio', to: '/' },
+  { label: 'Vuelos', to: '/vuelos' },
+  { label: 'Aerolíneas', to: '/aerolineas' },
+  { label: 'Información', to: '/informacion' },
+  { label: 'Contacto', to: '/contacto' },
 ]
 
 export default function PublicLayout() {
+  const navigate = useNavigate()
   const location = useLocation()
+
   const user = useAuthStore((state) => state.user)
+  const logout = useAuthStore((state) => state.logout)
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
 
-  // Cerrar el menú móvil cada vez que cambia la ruta
   useEffect(() => {
     setIsMobileMenuOpen(false)
   }, [location.pathname])
+
+  const showPrivatePanel = hasPrivilegedAccess(user)
+  const showProfileButton = Boolean(user) && !showPrivatePanel
+
+  async function handleLogout() {
+    try {
+      setIsLoggingOut(true)
+      await logout()
+      navigate('/', { replace: true })
+    } finally {
+      setIsLoggingOut(false)
+    }
+  }
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -62,20 +68,13 @@ export default function PublicLayout() {
       <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
         <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Logo */}
-          <Link
-            to="/"
-            className="flex items-center gap-3"
-            aria-label="Ir al inicio"
-          >
+          <Link to="/" className="flex items-center gap-3" aria-label="Ir al inicio">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm">
               <Plane className="h-5 w-5" />
             </div>
 
             <div className="leading-tight">
-              <p className="font-bold tracking-tight">
-                Cotopaxi Airlines
-              </p>
-
+              <p className="font-bold tracking-tight">Cotopaxi Airlines</p>
               <p className="hidden text-xs text-muted-foreground sm:block">
                 Tu viaje comienza aquí
               </p>
@@ -83,10 +82,7 @@ export default function PublicLayout() {
           </Link>
 
           {/* Navegación de escritorio */}
-          <nav
-            className="hidden items-center gap-1 lg:flex"
-            aria-label="Navegación principal"
-          >
+          <nav className="hidden items-center gap-1 lg:flex" aria-label="Navegación principal">
             {navigationItems.map((item) => (
               <NavLink
                 key={item.to}
@@ -106,59 +102,64 @@ export default function PublicLayout() {
             ))}
           </nav>
 
-          {/* Acceso y menú móvil */}
+          {/* Acciones de escritorio */}
           <div className="flex items-center gap-2">
-           {user ? (
-                <Button
-                  asChild
-                  className="hidden sm:inline-flex"
-                >
+            <div className="hidden items-center gap-2 sm:flex">
+              {/* Botón reservar — visible siempre, la propia página maneja si pide login */}
+              <Button asChild variant="outline">
+                <Link to="/reservas">
+                  <Ticket className="mr-2 h-4 w-4" />
+                  Reservar vuelo
+                </Link>
+              </Button>
+
+              {/* Panel / perfil / ingresar */}
+              <Button asChild>
+                {showPrivatePanel ? (
                   <Link to="/private/dashboard">
                     <LayoutDashboard className="mr-2 h-4 w-4" />
                     Panel privado
                   </Link>
-                </Button>
-              ) : !user ? (
-                <Button
-                  asChild
-                  className="hidden sm:inline-flex"
-                >
+                ) : showProfileButton ? (
+                  <Link to="/perfil">
+                    <User className="mr-2 h-4 w-4" />
+                    Mi perfil
+                  </Link>
+                ) : (
                   <Link to="/login">
                     <LogIn className="mr-2 h-4 w-4" />
                     Ingresar
                   </Link>
-                </Button>
-              ) : null}
+                )}
+              </Button>
 
-            <Button
-              asChild
-              variant="outline"
-              className="hidden sm:inline-flex"
-            >
-              <Link to="/reservas">
-                Reservar vuelo
-              </Link>
-            </Button>
+              {/* Logout — solo si hay sesión activa */}
+              {user && (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  disabled={isLoggingOut}
+                  aria-label="Cerrar sesión"
+                  onClick={handleLogout}
+                  className="text-muted-foreground hover:border-destructive/30 hover:bg-destructive/10 hover:text-destructive"
+                >
+                  <LogOut className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
+
+            {/* Botón menú móvil */}
             <Button
               type="button"
               variant="ghost"
               size="icon"
               className="lg:hidden"
-              aria-label={
-                isMobileMenuOpen
-                  ? 'Cerrar menú'
-                  : 'Abrir menú'
-              }
+              aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
               aria-expanded={isMobileMenuOpen}
-              onClick={() => {
-                setIsMobileMenuOpen((current) => !current)
-              }}
+              onClick={() => setIsMobileMenuOpen((current) => !current)}
             >
-              {isMobileMenuOpen ? (
-                <X className="h-5 w-5" />
-              ) : (
-                <Menu className="h-5 w-5" />
-              )}
+              {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </div>
@@ -166,10 +167,7 @@ export default function PublicLayout() {
         {/* Menú móvil */}
         {isMobileMenuOpen && (
           <div className="border-t bg-background lg:hidden">
-            <nav
-              className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4 sm:px-6"
-              aria-label="Navegación móvil"
-            >
+            <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4 sm:px-6" aria-label="Navegación móvil">
               {navigationItems.map((item) => (
                 <NavLink
                   key={item.to}
@@ -188,15 +186,24 @@ export default function PublicLayout() {
                 </NavLink>
               ))}
 
-              <div className="mt-3 border-t pt-4">
-                <Button
-                  asChild
-                  className="w-full"
-                >
-                  {user ? (
+              <div className="mt-3 flex flex-col gap-2 border-t pt-4">
+                <Button asChild variant="outline" className="w-full">
+                  <Link to="/reservas">
+                    <Ticket className="mr-2 h-4 w-4" />
+                    Reservar vuelo
+                  </Link>
+                </Button>
+
+                <Button asChild className="w-full">
+                  {showPrivatePanel ? (
                     <Link to="/private/dashboard">
                       <LayoutDashboard className="mr-2 h-4 w-4" />
                       Ir al panel privado
+                    </Link>
+                  ) : showProfileButton ? (
+                    <Link to="/perfil">
+                      <User className="mr-2 h-4 w-4" />
+                      Mi perfil
                     </Link>
                   ) : (
                     <Link to="/login">
@@ -205,13 +212,25 @@ export default function PublicLayout() {
                     </Link>
                   )}
                 </Button>
+
+                {user && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full text-destructive hover:bg-destructive/10"
+                    disabled={isLoggingOut}
+                    onClick={handleLogout}
+                  >
+                    <LogOut className="mr-2 h-4 w-4" />
+                    {isLoggingOut ? 'Cerrando sesión...' : 'Cerrar sesión'}
+                  </Button>
+                )}
               </div>
             </nav>
           </div>
         )}
       </header>
 
-      {/* Contenido de cada página */}
       <main className="flex-1">
         <Outlet />
       </main>
@@ -219,19 +238,12 @@ export default function PublicLayout() {
       {/* Footer */}
       <footer className="border-t bg-muted/30">
         <div className="mx-auto grid max-w-7xl gap-10 px-6 py-12 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
-          {/* Marca */}
           <div>
-            <Link
-              to="/"
-              className="flex items-center gap-3"
-            >
+            <Link to="/" className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground">
                 <Plane className="h-5 w-5" />
               </div>
-
-              <span className="font-bold">
-                Cotopaxi Airlines
-              </span>
+              <span className="font-bold">Cotopaxi Airlines</span>
             </Link>
 
             <p className="mt-4 max-w-sm text-sm leading-6 text-muted-foreground">
@@ -240,12 +252,8 @@ export default function PublicLayout() {
             </p>
           </div>
 
-          {/* Navegación */}
           <div>
-            <h2 className="font-semibold">
-              Navegación
-            </h2>
-
+            <h2 className="font-semibold">Navegación</h2>
             <div className="mt-4 flex flex-col gap-3">
               {navigationItems.map((item) => (
                 <Link
@@ -259,107 +267,53 @@ export default function PublicLayout() {
             </div>
           </div>
 
-          {/* Información */}
           <div>
-            <h2 className="font-semibold">
-              Información para viajar
-            </h2>
-
+            <h2 className="font-semibold">Información para viajar</h2>
             <div className="mt-4 flex flex-col gap-3">
-              <Link
-                to="/informacion"
-                className="w-fit text-sm text-muted-foreground transition-colors hover:text-primary"
-              >
+              <Link to="/informacion" className="w-fit text-sm text-muted-foreground transition-colors hover:text-primary">
                 Equipaje
               </Link>
-
-              <Link
-                to="/informacion"
-                className="w-fit text-sm text-muted-foreground transition-colors hover:text-primary"
-              >
+              <Link to="/informacion" className="w-fit text-sm text-muted-foreground transition-colors hover:text-primary">
                 Documentación
               </Link>
-
-              <Link
-                to="/informacion"
-                className="w-fit text-sm text-muted-foreground transition-colors hover:text-primary"
-              >
+              <Link to="/informacion" className="w-fit text-sm text-muted-foreground transition-colors hover:text-primary">
                 Horarios y recomendaciones
               </Link>
-
-              <Link
-                to="/vuelos"
-                className="w-fit text-sm text-muted-foreground transition-colors hover:text-primary"
-              >
+              <Link to="/vuelos" className="w-fit text-sm text-muted-foreground transition-colors hover:text-primary">
                 Estado de vuelos
               </Link>
             </div>
           </div>
 
-          {/* Contacto */}
           <div>
-            <h2 className="font-semibold">
-              Contacto
-            </h2>
-
+            <h2 className="font-semibold">Contacto</h2>
             <div className="mt-4 space-y-4 text-sm text-muted-foreground">
               <div className="flex items-start gap-3">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-
-                <span>
-                  Aeropuerto Internacional Cotopaxi, Ecuador
-                </span>
+                <span>Aeropuerto Internacional Cotopaxi, Ecuador</span>
               </div>
-
               <div className="flex items-center gap-3">
                 <Phone className="h-4 w-4 shrink-0 text-primary" />
-
-                <span>
-                  +593 00 000 0000
-                </span>
+                <span>+593 00 000 0000</span>
               </div>
-
               <div className="flex items-center gap-3">
                 <Mail className="h-4 w-4 shrink-0 text-primary" />
-
-                <span>
-                  contacto@cotopaxiairlines.com
-                </span>
+                <span>contacto@cotopaxiairlines.com</span>
               </div>
-
               <div className="flex items-center gap-3">
                 <Building2 className="h-4 w-4 shrink-0 text-primary" />
-
-                <span>
-                  Atención de lunes a domingo
-                </span>
+                <span>Atención de lunes a domingo</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Parte inferior */}
         <div className="border-t">
           <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-6 py-5 text-center text-sm text-muted-foreground sm:flex-row sm:text-left lg:px-8">
-            <p>
-              © {new Date().getFullYear()} Cotopaxi Airlines. Todos los
-              derechos reservados.
-            </p>
-
+            <p>© {new Date().getFullYear()} Cotopaxi Airlines. Todos los derechos reservados.</p>
             <div className="flex items-center gap-5">
-              <Link
-                to="/informacion"
-                className="hover:text-primary"
-              >
-                Términos
-              </Link>
-
-              <Link
-                to="/informacion"
-                className="hover:text-primary"
-              >
-                Privacidad
-              </Link>
+              <Link to="/informacion" className="hover:text-primary">Términos</Link>
+              <Link to="/informacion" className="hover:text-primary">Privacidad</Link>
             </div>
           </div>
         </div>

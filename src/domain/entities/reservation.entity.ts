@@ -14,3 +14,8 @@ export interface Reservation {
     precio: number
   }
 }
+
+export interface CreateReservationPayload {
+  vuelo: number
+  cantidad_pasajeros: number
+}

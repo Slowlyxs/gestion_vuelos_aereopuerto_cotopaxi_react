@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
 import { useAuthStore } from '@/presentation/store/auth.store'
-import { canAccess } from '@/infrastructure/config/permissions'
+import { canAccess, hasPrivilegedAccess } from '@/infrastructure/config/permissions'
 
 interface ProtectedRouteProps {
   children: ReactNode
@@ -22,6 +22,10 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
 
   if (!user) {
     return <Navigate to="/login" state={{ from: location }} replace />
+  }
+
+  if (!hasPrivilegedAccess(user)) {
+    return <Navigate to="/" replace />
   }
 
   if (!canAccess(user, location.pathname)) {

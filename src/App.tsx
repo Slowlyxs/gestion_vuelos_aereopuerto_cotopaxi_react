@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Toaster } from 'sonner'
 
 import AppRouter from '@/presentation/router/AppRouter'
 import SplashPage from '@/presentation/pages/SplashPage'
@@ -26,5 +27,10 @@ export default function App() {
     return <SplashPage />
   }
 
-  return <AppRouter />
+  return (
+    <>
+      <AppRouter />
+      <Toaster richColors position="top-center" />
+    </>
+  )
 }

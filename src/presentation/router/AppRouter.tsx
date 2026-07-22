@@ -19,6 +19,7 @@ import FlightDetailPage from "@/presentation/pages/public/FlightDetailPage";
 import LoginPage from "@/presentation/pages/auth/LoginPage";
 import InformationPage from "@/presentation/pages/public/InformationPage";
 import ContactPage from "@/presentation/pages/public/ContactPage";
+import ProfilePage from "../pages/public/ProfilePage";
 
 // DASHBOARD
 import DashboardPage from "@/presentation/pages/private/dashboard/DashboardPage";
@@ -54,6 +55,7 @@ import CrewAssignmentsPage from "../pages/private/staff/CrewAssignmentsPage";
 import AirlinesPagePublic from "@/presentation/pages/public/AirlinesPage";
 import AirlinesPagePrivate from "../pages/private/infrastructure/AirlinesPage";
 import RegisterPage from "../pages/auth/RegisterPage";
+import ReservationPage from "../pages/public/ReservationPage";
 
 
 const router = createBrowserRouter([
@@ -72,7 +74,9 @@ const router = createBrowserRouter([
       { path: "/informacion", element: <InformationPage />,},
       { path: "/contacto", element: <ContactPage />, },
       { path: "/splash", element: <SplashPage />, },
-      { path: "/register", element: <RegisterPage/> }
+      { path: "/register", element: <RegisterPage/> },
+      { path: "/reservas", element: <ReservationPage/> },
+      { path: "/perfil", element: <ProfilePage/> },
     ],
   },
 

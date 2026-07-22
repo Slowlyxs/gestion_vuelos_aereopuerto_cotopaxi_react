@@ -1,40 +1,86 @@
-// reservation.store.ts
-
 import { create } from 'zustand'
 
-import { reservationFactory } from '@/infrastructure/factories/reservation.factory'
+import type { Reservation } from '@/domain/entities/reservation.entity'
 
-export const useReservationStore = create(
+import { getReservationsUseCase } from '@/application/use-cases/get-reservations.usecase'
+import { createReservationUseCase } from '@/application/use-cases/create-reservation.usecase'
+
+interface ReservationState {
+  reservations: Reservation[]
+
+  isLoading: boolean
+  isCreating: boolean
+  error: string | null
+
+  loadMyReservations(): Promise<void>
+
+  createReservation(data: {
+    vuelo: number
+    cantidad_pasajeros: number
+  }): Promise<void>
+
+  clearError(): void
+}
+
+function extractErrorMessage(error: unknown, fallback: string): string {
+  const apiErr = error as { detail?: string; message?: string }
+  return apiErr?.detail ?? apiErr?.message ?? fallback
+}
+
+export const useReservationStore = create<ReservationState>(
   (set) => ({
-
     reservations: [],
 
     isLoading: false,
+    isCreating: false,
+    error: null,
 
-    async loadReservations() {
+    async loadMyReservations() {
+      try {
+        set({ isLoading: true, error: null })
 
-      set({
-        isLoading: true
-      })
+        const reservations = await getReservationsUseCase()
 
-      const reservations =
-        await reservationFactory.getAll()
+        set({ reservations, isLoading: false })
+      } catch (error) {
+        console.error(error)
 
-      set({
-        reservations,
-        isLoading: false
-      })
+        set({
+          isLoading: false,
+          error: extractErrorMessage(error, 'No se pudieron cargar tus reservas.'),
+        })
+      }
     },
 
-    async createReservation(
-      vueloId: number,
-      pasajeros: number
-    ) {
+    async createReservation(data) {
+      try {
+        set({ isCreating: true, error: null })
 
-      await reservationFactory.create(
-        vueloId,
-        pasajeros
-      )
-    }
-  })
+        const reservation = await createReservationUseCase(
+          data.vuelo,
+          data.cantidad_pasajeros,
+        )
+
+        set((state) => ({
+          reservations: [reservation, ...state.reservations],
+          isCreating: false,
+        }))
+      } catch (error) {
+        console.error(error)
+
+        const message = extractErrorMessage(error, 'No se pudo realizar la reserva.')
+
+        set({
+          isCreating: false,
+          error: message,
+        })
+
+        throw new Error(message)
+      }
+    },
+
+    clearError() {
+      set({ error: null })
+    },
+  }),
 )

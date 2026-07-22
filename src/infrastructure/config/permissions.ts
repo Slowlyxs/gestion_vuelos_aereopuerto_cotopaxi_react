@@ -47,8 +47,23 @@ const COMMON_ROUTES = [
   '/private/dashboard',
 ]
 
+const VALID_ROLES = Object.keys(ROLE_ROUTES) as Role[]
+
+/**
+ * true si el usuario tiene algún tipo de acceso administrativo:
+ * es staff, o tiene uno de los 4 roles operativos válidos.
+ * Un cliente normal (role: null o cualquier valor fuera de la lista) → false.
+ */
+export function hasPrivilegedAccess(user: AccessUser | null): boolean {
+  if (!user) return false
+  if (user.is_staff) return true
+  return VALID_ROLES.includes(user.role as Role)
+}
+
 export function canAccess(user: AccessUser, location: string): boolean {
   if (user.is_staff) return true
+
+  if (!hasPrivilegedAccess(user)) return false
 
   const roleRoutes = ROLE_ROUTES[user.role as Role] ?? []
   const allowed = [...COMMON_ROUTES, ...roleRoutes]
